@@ -31,6 +31,19 @@ app.get("/api/genres", (req,res)=>{
     res.send(genres);
 })
 
+//http get single genre with particular id
+app.get("/api/genres/:id", (req,res)=>{
+    //go to genre and find data with particular id
+    const genre = genres.find((g) => g.id === parseInt(req.params.id));
+
+    //if genre with requested id is not found
+    if(!genre)
+        return res.status(404).send("The genre with given ID is not found");
+
+    res.send(genre);
+
+})
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => startupDebugger(`Listening on port ${port}...`));

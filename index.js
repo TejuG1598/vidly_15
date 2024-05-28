@@ -26,6 +26,11 @@ const genres = [
     { id: 3, genre: "Romance" },
   ];
 
+//http get all request
+app.get("/api/genres", (req,res)=>{
+    res.send(genres);
+})
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => startupDebugger(`Listening on port ${port}...`));

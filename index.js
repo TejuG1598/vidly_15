@@ -66,6 +66,28 @@ app.post("/api/genres", (req,res)=>{
 
 });
 
+//http put request for updating the particular genere with given id
+app.put("/api/genres/:id", (req,res) =>{
+     //go to genre and find data with particular id
+     const genre = genres.find((g) => g.id === parseInt(req.params.id));
+
+     //if genre with requested id is not found
+     if(!genre)
+         return res.status(404).send("The genre with given ID is not found");
+    
+    //first validate the put before posting it to the server or database
+    const {error} = validateGenre(req.body);
+
+    //if its a bad request , then status is 400
+    if (error) return res.status(400).send(error.details[0].message);
+
+    //if everything is good update the genre and send it
+    genre.genreType = req.body.genreType;
+
+    res.send(genre);
+
+})
+
 //using Joi for validation of the http request
 function validateGenre(genre) {
     const schema = Joi.object({
@@ -73,6 +95,8 @@ function validateGenre(genre) {
     });
     return schema.validate(genre);
 }
+
+
 
 
 const port = process.env.PORT || 3000;

@@ -66,7 +66,7 @@ app.post("/api/genres", (req,res)=>{
 
 });
 
-//http put request for updating the particular genere with given id
+//http put request for updating the particular genre with given id
 app.put("/api/genres/:id", (req,res) =>{
      //go to genre and find data with particular id
      const genre = genres.find((g) => g.id === parseInt(req.params.id));
@@ -85,6 +85,24 @@ app.put("/api/genres/:id", (req,res) =>{
     genre.genreType = req.body.genreType;
 
     res.send(genre);
+
+})
+
+//http delete request for deleting the genre of given id.
+app.delete("/api/genres/:id",(req,res)=>{
+    //go to genre and find data with particular id
+    const genre = genres.find((g) => g.id === parseInt(req.params.id));
+
+    //if genre with requested id is not found
+    if(!genre)
+        return res.status(404).send("The genre with given ID is not found");
+
+    //to delete find the index and then use splice to remove it from the genres array
+    const index = genres.indexOf(genre,1);
+    genres.splice(genre);
+
+    //return the genres
+    res.send(genres);
 
 })
 

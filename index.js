@@ -1,3 +1,6 @@
+//now install and load mongoose
+const mongoose = require('mongoose');
+
 //importing express
 const express = require("express");
 
@@ -5,6 +8,11 @@ const app = express();
 
 //import the router module
 const genres = require("./routes/genres");
+
+//connect to mongoose
+mongoose.connect('mongodb://localhost/vidly')
+  .then(() => console.log('Connected to MongoDB...'))
+  .catch(err => console.error('Could not connect to MongoDB...'))
 
 //set view engine to pug
 app.set("view engine", "pug");
@@ -31,5 +39,5 @@ app.get("/", (req, res) => {
   });
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5090;
 app.listen(port, () => startupDebugger(`Listening on port ${port}...`));
